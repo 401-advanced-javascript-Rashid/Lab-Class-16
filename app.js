@@ -1,17 +1,15 @@
 'use strict';
 
-const fs = require('fs');
+const events = require('./event');
+const fileSystem = require('./file-system');
+require('./logger.js');
 
-const alterFile = (file) => {
-  fs.readFile( file, (err, data) => {
-    if(err) { throw err; }
-    let text = data.toString().toUpperCase();
-    fs.writeFile( file, Buffer.from(text), (err, data) => {
-      if(err) { throw err; }
-      console.log(`${file} saved`);
-    });
-  });
-};
 
-let file = process.argv.slice(2).shift();
-alterFile(file);
+let data = process.argv.pop();
+
+if(data){
+
+  fileSystem.capsLock(data);
+  events.emit('log', 'To Upper Case Function !');
+
+}
